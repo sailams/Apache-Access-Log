@@ -4,6 +4,8 @@ Utility to pull the logs from apache access file to MongoDB for further analysis
 
   - (host, request-count) tuples for the top-10 frequent hosts
   - (HTTP-status-code, count) tuples, sorted by count
+  - the hour with the highest request count, along with the count
+  - the hour with the highest total number of bytes served, along with the total
   - the first & last path name components of top-10 most frequently accessed resources
 
 # Pre-requisites
@@ -62,11 +64,23 @@ $python3 log_shipper.py &
 To start the application server (express), issue the below command in the terminal
 $node home.js (add & in the end to run the process in backend)
 
+### URL Endpoints for retrieving the Metrics
+
+1) http://localhost:8010/api/logs/request_count --> Retrieves Client IP and Request count from MongoDB
+2) http://localhost:8010/api/logs/status_count  --> Retrieves Status code and associated count from MongoDB
+3) http://localhost:8010/api/logs/pathresources --> Retrieves first and last path of the Request URI from MongoDB
+4) http://localhost:8010/api/logs/highestreqhour --> Retrieves the highest request count hour and the count
+5) http://localhost:8010/api/logs/highestbyteshour --> Retrieves the highest bytes received hour and the total
+
 ### Todos
 
- - Develop ETL engine (Node.JS) to process logs efficiently at near real time (Seen the issue of previous data getting processed in subsequent requests)
+ - Develop ETL engine (Node.JS) to process logs efficiently at near real time
  - Security features for HTTP endpoints including APIs for fetching MongoDB information
  - MORE Testing
+
+### OPEN ISSUE
+Seen an issue with ETL engine sending HTTP Post to MongoDB i.e ETL engine processing old data in subsequent HTTP Post request to MongoDB hence it delays ingestion to MongoDB. Needs further investigation. 
+
 
 **Free Software!**
 
