@@ -51,7 +51,7 @@ exports.host_req_count = function (req,res) {
           countOfReq: { $sum: 1}
         }},
       { $sort: {'countOfReq': -1}},
-      { $limit: 4}
+      { $limit: 10}
     ],
     function(err, result) {
       if (err) {
@@ -95,7 +95,7 @@ exports.first_last_path = function (req,res) {
           countOfReqUri: { $sum: 1}
         }},
       { $sort: {'countOfReqUri': -1}},
-      { $limit: 2}
+      { $limit: 10}
     ],
     function(err, result) {
       if (err) {
